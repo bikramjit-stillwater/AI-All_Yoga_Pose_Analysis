@@ -40,7 +40,6 @@
             </div>
         </div>
 
-        <!-- Decorative concentric rings (the "still water" ripple) -->
         <div class="hero-ripple" aria-hidden="true">
             <span></span><span></span><span></span><span></span><span></span>
         </div>
@@ -91,7 +90,7 @@
                     </div>
                     <div class="card-meta">
                         <span class="badge badge-{{ m.status }}">{{ m.status | capitalize }}</span>
-                        <span class="card-mode">{{ input_mode if input_mode else m.input_mode }}</span>
+                        <span class="card-mode">{{ m.input_mode }}</span>
                     </div>
                 </div>
 
@@ -112,6 +111,13 @@
                 </div>
 
                 <div class="card-foot">
+                    {% set mode = m.embed_mode | default('iframe') %}
+                    {% if mode == 'new_tab' %}
+                    <a href="{{ m.url }}" target="_blank" rel="noopener" class="btn btn-card">
+                        <span>Launch in new tab</span>
+                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4 H4 V16 H16 V13 M11 4 H16 V9 M16 4 L9 11" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </a>
+                    {% else %}
                     <a href="/launch/{{ m.id }}" class="btn btn-card">
                         <span>Launch</span>
                         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H 15 M10 5 L 15 10 L 10 15" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
@@ -119,6 +125,7 @@
                     <a href="{{ m.url }}" target="_blank" rel="noopener" class="card-newtab" aria-label="Open in new tab">
                         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3 H3 V13 H13 V10 M9 3 H13 V7 M13 3 L7 9" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
                     </a>
+                    {% endif %}
                 </div>
             </article>
             {% endfor %}
@@ -178,7 +185,6 @@
 {% block scripts %}
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    // Reveal-on-scroll for cards
     const observer = new IntersectionObserver(
         (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('in-view')),
         { threshold: 0.12 }
