@@ -23,7 +23,8 @@
       "icon": "mountain",
       "color": "sage",
       "status": "live",
-      "input_mode": "Upload Video"
+      "input_mode": "Upload Video",
+      "embed_mode": "iframe"
     },
     {
       "id": "tadasana-realtime",
@@ -41,7 +42,8 @@
       "icon": "camera",
       "color": "ochre",
       "status": "live",
-      "input_mode": "Webcam"
+      "input_mode": "Webcam",
+      "embed_mode": "new_tab"
     },
     {
       "id": "child-pose-static",
@@ -59,7 +61,8 @@
       "icon": "lotus",
       "color": "river",
       "status": "live",
-      "input_mode": "Upload Video"
+      "input_mode": "Upload Video",
+      "embed_mode": "iframe"
     }
   ]
 }
