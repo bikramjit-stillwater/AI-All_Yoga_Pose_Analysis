@@ -68,7 +68,7 @@ def load_config() -> dict[str, Any]:
 app = FastAPI(
     title="Stillwater Pose Hub",
     description="Unified gateway for Stillwater Yoga's AI pose-detection modules.",
-    version="1.0.0",
+    version="1.1.0",
     docs_url="/api/docs",
     redoc_url=None,
 )
@@ -106,12 +106,24 @@ async def homepage(request: Request) -> HTMLResponse:
     )
 
 
-@app.get("/launch/{module_id}", response_class=HTMLResponse)
-async def launch_module(request: Request, module_id: str) -> HTMLResponse:
-    """Embedded-iframe view of a module — keeps users inside the hub shell."""
+@app.get("/launch/{module_id}")
+async def launch_module(request: Request, module_id: str):
+    """Module launch — either embedded iframe view, or 302 redirect to external app.
+
+    The mode is controlled per-module by the `embed_mode` field in modules.json:
+      - "iframe" (default): renders launch.html with an embedded iframe
+      - "new_tab": defensively redirects to the external URL. This is for
+        modules that can't be safely iframed (WebRTC, cross-origin webcam,
+        Twilio TURN handshakes, etc.). The homepage card for these already
+        opens directly in a new tab; this redirect catches stale bookmarks.
+    """
     module = find_module(module_id)
     if module is None:
         raise HTTPException(status_code=404, detail=f"Module '{module_id}' not found.")
+
+    embed_mode = module.get("embed_mode", "iframe")
+    if embed_mode == "new_tab":
+        return RedirectResponse(url=module["url"], status_code=302)
 
     config = load_config()
     return templates.TemplateResponse(
@@ -126,7 +138,7 @@ async def launch_module(request: Request, module_id: str) -> HTMLResponse:
 
 @app.get("/go/{module_id}")
 async def redirect_to_module(module_id: str) -> RedirectResponse:
-    """Direct redirect — opens the underlying Streamlit app in the current tab."""
+    """Direct redirect — opens the underlying app in the current tab."""
     module = find_module(module_id)
     if module is None:
         raise HTTPException(status_code=404, detail=f"Module '{module_id}' not found.")
