@@ -38,7 +38,7 @@
         "MediaPipe skeleton overlay",
         "Dynamic score & feedback"
       ],
-      "url": "https://realtime-tadasha-pose-detection.onrender.com",
+      "url": "https://realtime-tadasha-pose-detection-hrp4.onrender.com",
       "icon": "camera",
       "color": "ochre",
       "status": "live",
