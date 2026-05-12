@@ -19,12 +19,13 @@
         "Per-step zoomed skeleton overlay",
         "AI coaching from Gemini 2.5 Flash"
       ],
-      "url": "https://static-tadasha-pose-detection-v2.onrender.com",
+      "url": "https://static-tadasha-pose-detection-c3tk.onrender.com/",
       "icon": "mountain",
       "color": "sage",
       "status": "live",
       "input_mode": "Upload Video",
-      "embed_mode": "iframe"
+      "embed_mode": "iframe",
+      "guide_video": "/static/video/practice-guide.mp4"
     },
     {
       "id": "tadasana-realtime",
@@ -38,12 +39,13 @@
         "MediaPipe skeleton overlay",
         "Dynamic score & feedback"
       ],
-      "url": "https://realtime-tadasha-pose-detection-hrp4.onrender.com",
+      "url": "https://realtime-tadasha-pose-detection-hrp4.onrender.com/",
       "icon": "camera",
       "color": "ochre",
       "status": "live",
       "input_mode": "Webcam",
-      "embed_mode": "new_tab"
+      "embed_mode": "iframe",
+      "guide_video": "/static/video/practice-guide.mp4"
     },
     {
       "id": "child-pose-static",
@@ -57,12 +59,13 @@
         "Hip, spine & shoulder alignment checks",
         "AI coaching from Gemini 2.5 Flash"
       ],
-      "url": "https://static-chisld-pose-detection-v2.onrender.com",
+      "url": "https://static-chisld-pose-detection.onrender.com/",
       "icon": "lotus",
       "color": "river",
       "status": "live",
       "input_mode": "Upload Video",
-      "embed_mode": "iframe"
+      "embed_mode": "iframe",
+      "guide_video": "/static/video/practice-guide.mp4"
     }
   ]
 }
