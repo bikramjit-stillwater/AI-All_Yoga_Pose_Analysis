@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ module.name }} — {{ site.brand }}{% endblock %}
+
+{% block content %}
+<div class="launch-shell">
+
+    <header class="launch-bar">
+        <a href="/" class="launch-back" aria-label="Back to all modules">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12 4 L 6 10 L 12 16 M 6 10 H 16" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            <span>All Postures</span>
+        </a>
+
+        <div class="launch-title">
+            <p class="launch-sanskrit">{{ module.sanskrit }}</p>
+            <h1>{{ module.name }}</h1>
+            <p class="launch-category">{{ module.category }} · {{ module.input_mode }}</p>
+        </div>
+
+        <div class="launch-actions">
+            <a href="{{ module.url }}" target="_blank" rel="noopener" class="launch-newtab">
+                <span>Open Full</span>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3 H3 V13 H13 V10 M9 3 H13 V7 M13 3 L7 9" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+        </div>
+    </header>
+
+    <div class="launch-frame-wrap">
+        <div class="launch-loader" id="loader">
+            <div class="ripple-loader"><span></span><span></span><span></span></div>
+            <p>Waking the practice space…</p>
+            <p class="loader-sub">Free Render services may take 30–60s to wake on first visit.</p>
+        </div>
+        <iframe
+            id="moduleFrame"
+            src="{{ module.url }}"
+            title="{{ module.name }}"
+            allow="camera; microphone; autoplay; fullscreen"
+            referrerpolicy="strict-origin-when-cross-origin"
+            onload="document.getElementById('loader').classList.add('hidden')"
+        ></iframe>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Hide loader after 90s regardless, in case onload never fires (e.g. X-Frame-Options blocks iframe)
+    setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader && !loader.classList.contains('hidden')) {
+            loader.innerHTML = `
+                <p style="font-size: 1.1rem; margin-bottom: 1rem;">This module can't be embedded.</p>
+                <a href="{{ module.url }}" target="_blank" rel="noopener" class="btn btn-primary">Open in new tab →</a>
+            `;
+        }
+    }, 90000);
+</script>
+{% endblock %}
